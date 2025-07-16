@@ -1,1 +1,1 @@
-# calculator
+A calculator built using HTML, CSS, and JavaScript. Part of The Odin Project Foundations course.
