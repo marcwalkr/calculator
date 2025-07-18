@@ -1,0 +1,79 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+main {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 36px;
+  height: 100vh;
+  background-color: #C0C9EE;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.calculator {
+  width: 400px;
+  height: 570px;
+  padding: 36px;
+  border: 1px solid black;
+  border-radius: 16px;
+  background-color: #B8E5FA;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#display {
+  width: 100%;
+  height: 80px;
+  padding: 16px;
+  border: 1px solid black;
+  border-radius: 8px;
+  color: #34383b;
+  background-color: #B3B7C0;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.button-row {
+  display: flex;
+  justify-content: flex-end;
+}
+
+button {
+  font-family: inherit;
+  font-size: inherit;
+  width: 80px;
+  height: 80px;
+  border: 1px black solid;
+  border-radius: 50%;
+}
+
+#clear-button {
+  color: #5a2910;
+  background-color: #FC9066;
+}
+
+#delete-button {
+  color: #55355E;
+  background-color: #CB9DF0;
+}
+
+.number-button, #decimal-button {
+  color: #4c4152;
+  background-color: #E7D5ED;
+}
+
+.operator-button {
+  color: #475544;
+  background-color: #C3DEC0;
+}
+
+#equals-button {
+  color: #574f3d;
+  background-color: #F0E3B7;
+}
