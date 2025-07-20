@@ -58,6 +58,10 @@ button {
   border-radius: 50%;
 }
 
+button:active {
+  filter: brightness(90%);
+}
+
 #clear-button {
   color: #5a2910;
   background-color: #FC9066;
