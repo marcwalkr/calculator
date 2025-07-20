@@ -37,6 +37,7 @@ main {
   background-color: #B3B7C0;
   display: flex;
   justify-content: flex-end;
+  align-items: center;
 }
 
 #display-text {
