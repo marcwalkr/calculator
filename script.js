@@ -26,3 +26,18 @@ function operate(a, b, operator) {
       return divide(a, b);
   }
 }
+
+function appendToDisplay(value) {
+  display.textContent += value;
+  display.scrollLeft = display.scrollWidth;
+}
+
+const display = document.querySelector("#display-text");
+
+const buttons = document.querySelector("#button-container");
+buttons.addEventListener("click", (event) => {
+  const value = event.target.dataset.value;
+  if (!value) return // Click wasn't on a number button
+
+  appendToDisplay(value);
+});
