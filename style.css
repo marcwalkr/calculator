@@ -33,7 +33,7 @@ main {
   padding: 16px;
   border: 1px solid black;
   border-radius: 8px;
-  color: #34383b;
+  color: #34383B;
   background-color: #B3B7C0;
   display: flex;
   justify-content: flex-end;
@@ -63,7 +63,7 @@ button:active {
 }
 
 #clear-button {
-  color: #5a2910;
+  color: #5A2910;
   background-color: #FC9066;
 }
 
@@ -73,7 +73,7 @@ button:active {
 }
 
 .number-button, #decimal-button {
-  color: #4c4152;
+  color: #4C4152;
   background-color: #E7D5ED;
 }
 
@@ -83,6 +83,6 @@ button:active {
 }
 
 #equals-button {
-  color: #574f3d;
+  color: #574F3D;
   background-color: #F0E3B7;
 }
