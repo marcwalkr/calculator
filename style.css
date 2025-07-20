@@ -73,7 +73,7 @@ button:active {
   background-color: #CB9DF0;
 }
 
-.number-button, #decimal-button {
+.number-button {
   color: #4C4152;
   background-color: #E7D5ED;
 }
