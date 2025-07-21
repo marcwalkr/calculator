@@ -82,6 +82,13 @@ function handleEquals() {
   }
 }
 
+function handleClear() {
+  num1 = "";
+  num2 = "";
+  operation = null;
+  clearDisplay();
+}
+
 const display = document.querySelector("#display-text");
 
 let num1 = "";
@@ -109,6 +116,7 @@ buttons.addEventListener("click", (event) => {
       handleEquals();
       break;
     case "clear":
+      handleClear();
       break;
     case "delete":
       break;
