@@ -36,6 +36,10 @@ function clearDisplay() {
   display.textContent = "";
 }
 
+function removeLastCharacter(string) {
+  return string.slice(0, -1);
+}
+
 function handleNumber(value) {
   if (justEvaluated) {
     clear();
@@ -44,11 +48,11 @@ function handleNumber(value) {
 
   if (operation === null) {
     num1 += value;
-  } else if (num2 === "") {
-    clearDisplay();
-    num2 += value;
+    editing = "num1";
   } else {
+    if (num2 === "") clearDisplay();
     num2 += value;
+    editing = "num2";
   }
 
   appendToDisplay(value);
@@ -67,7 +71,8 @@ function handleOperator(value) {
   if (num2 === "") {
     operation = value;
   } else {
-    num1 = operate(Number(num1), Number(num2), operation);
+    const result = operate(Number(num1), Number(num2), operation);
+    num1 = result.toString();
     clearDisplay();
     appendToDisplay(num1);
 
@@ -78,13 +83,14 @@ function handleOperator(value) {
 
 
 function handleEquals() {
-  if (num1 !== "" && num2 !== "" && operation !== null) {
-    num1 = operate(Number(num1), Number(num2), operation);
-    clearDisplay();
-    appendToDisplay(num1);
+  if (num1 === "" || num2 === "" || operation === null) return;
+  
+  const result = operate(Number(num1), Number(num2), operation);
+  num1 = result.toString();
+  clearDisplay();
+  appendToDisplay(num1);
 
-    justEvaluated = true;
-  }
+  justEvaluated = true;
 }
 
 function clear() {
@@ -94,10 +100,32 @@ function clear() {
   clearDisplay();
 }
 
+function handleDelete() {
+  if (num1 === "" && num2 === "") return;
+  
+  if (justEvaluated) {
+    editing = "num1";
+    num2 = "";
+    operation = null;
+    justEvaluated = false;
+  }
+
+  clearDisplay();
+
+  if (editing === "num1") {
+    num1 = removeLastCharacter(num1);
+    appendToDisplay(num1);
+  } else {
+    num2 = removeLastCharacter(num2);
+    appendToDisplay(num2);
+  }
+}
+
 const display = document.querySelector("#display-text");
 
 let num1 = "";
 let num2 = "";
+let editing = "";
 let operation = null;
 let justEvaluated = false;
 
@@ -124,6 +152,7 @@ buttons.addEventListener("click", (event) => {
       clear();
       break;
     case "delete":
+      handleDelete();
       break;
   }
 });
