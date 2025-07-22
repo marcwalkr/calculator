@@ -37,6 +37,11 @@ function clearDisplay() {
 }
 
 function handleNumber(value) {
+  if (justEvaluated) {
+    clear();
+    justEvaluated = false;
+  }
+
   if (operation === null) {
     num1 += value;
   } else if (num2 === "") {
@@ -82,7 +87,7 @@ function handleEquals() {
   }
 }
 
-function handleClear() {
+function clear() {
   num1 = "";
   num2 = "";
   operation = null;
@@ -116,7 +121,7 @@ buttons.addEventListener("click", (event) => {
       handleEquals();
       break;
     case "clear":
-      handleClear();
+      clear();
       break;
     case "delete":
       break;
