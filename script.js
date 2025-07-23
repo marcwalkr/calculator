@@ -40,7 +40,23 @@ function removeLastCharacter(string) {
   return string.slice(0, -1);
 }
 
+function isReplacingResult() {
+  return (mode === "resultDisplayed") || (mode === "inputtingNum2" && num2 === "");
+}
+
+function operateAndDisplay() {
+  const result = operate(Number(num1), Number(num2), operation);
+
+  // Set num1 to the result to allow for chaining operators and equals
+  num1 = result.toString();
+
+  clearDisplay();
+  appendToDisplay(num1);
+}
+
 function handleNumber(value) {
+  // A number was clicked after an expression was just evaluated
+  // Clear and start fresh
   if (mode === "justEvaluated") {
     clear();
     mode = "inputtingNum1";
@@ -59,38 +75,22 @@ function handleNumber(value) {
 }
 
 function handleOperator(value) {
-  if (num1 === "") return;
+  if (num1 === "") return; // An operator was clicked before the first number
 
-  if (mode === "justEvaluated") {
-    num2 = "";
-    operation = value;
-    mode = "inputtingNum2";
-    return;
+  if (mode === "inputtingNum2") {
+    // An operator was clicked before evaluating the previous expression
+    operateAndDisplay();
   }
 
-  if (num2 === "") {
-    operation = value;
-    mode = "inputtingNum2";
-  } else {
-    const result = operate(Number(num1), Number(num2), operation);
-    num1 = result.toString();
-    clearDisplay();
-    appendToDisplay(num1);
-
-    num2 = "";
-    operation = value;
-  }
+  num2 = "";
+  mode = "inputtingNum2";
+  operation = value;
 }
-
 
 function handleEquals() {
   if (num1 === "" || num2 === "" || operation === null) return;
-  
-  const result = operate(Number(num1), Number(num2), operation);
-  num1 = result.toString();
-  clearDisplay();
-  appendToDisplay(num1);
 
+  operateAndDisplay();
   mode = "justEvaluated";
 }
 
@@ -105,7 +105,8 @@ function clear() {
 function handleDelete() {
   if (num1 === "" && num2 === "") return;
   
-  if (mode === "justEvaluated" || mode === "inputtingNum2" && num2 === "") {
+  // User is modifying the displayed result, treat it as a new first number
+  if (isReplacingResult()) {
     num2 = "";
     operation = null;
     mode = "inputtingNum1";
