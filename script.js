@@ -77,7 +77,7 @@ function handleNumber(value) {
 function handleOperator(value) {
   if (num1 === "") return; // An operator was clicked before the first number
 
-  if (mode === "inputtingNum2") {
+  if (num2 !== "") {
     // An operator was clicked before evaluating the previous expression
     evaluateAndDisplayResult();
   }
