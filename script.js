@@ -41,18 +41,18 @@ function removeLastCharacter(string) {
 }
 
 function handleNumber(value) {
-  if (justEvaluated) {
+  if (mode === "justEvaluated") {
     clear();
-    justEvaluated = false;
+    mode = "inputtingNum1";
   }
 
-  if (operation === null) {
+  if (mode === "inputtingNum1") {
     num1 += value;
-    editing = "num1";
   } else {
+    // num1 is still on the display, clear once before starting num2
     if (num2 === "") clearDisplay();
+
     num2 += value;
-    editing = "num2";
   }
 
   appendToDisplay(value);
@@ -61,15 +61,16 @@ function handleNumber(value) {
 function handleOperator(value) {
   if (num1 === "") return;
 
-  if (justEvaluated) {
-    operation = value;
+  if (mode === "justEvaluated") {
     num2 = "";
-    justEvaluated = false;
+    operation = value;
+    mode = "inputtingNum2";
     return;
   }
 
   if (num2 === "") {
     operation = value;
+    mode = "inputtingNum2";
   } else {
     const result = operate(Number(num1), Number(num2), operation);
     num1 = result.toString();
@@ -90,29 +91,29 @@ function handleEquals() {
   clearDisplay();
   appendToDisplay(num1);
 
-  justEvaluated = true;
+  mode = "justEvaluated";
 }
 
 function clear() {
   num1 = "";
   num2 = "";
   operation = null;
+  mode = "inputtingNum1";
   clearDisplay();
 }
 
 function handleDelete() {
   if (num1 === "" && num2 === "") return;
   
-  if (justEvaluated) {
-    editing = "num1";
+  if (mode === "justEvaluated" || mode === "inputtingNum2" && num2 === "") {
     num2 = "";
     operation = null;
-    justEvaluated = false;
+    mode = "inputtingNum1";
   }
 
   clearDisplay();
 
-  if (editing === "num1") {
+  if (mode === "inputtingNum1") {
     num1 = removeLastCharacter(num1);
     appendToDisplay(num1);
   } else {
@@ -125,9 +126,8 @@ const display = document.querySelector("#display-text");
 
 let num1 = "";
 let num2 = "";
-let editing = "";
 let operation = null;
-let justEvaluated = false;
+let mode = "inputtingNum1";
 
 const buttons = document.querySelector("#button-container");
 buttons.addEventListener("click", (event) => {
