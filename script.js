@@ -41,7 +41,7 @@ function removeLastCharacter(string) {
 }
 
 function isReplacingResult() {
-  return (mode === "resultDisplayed") || (mode === "inputtingNum2" && num2 === "");
+  return (mode === "justEvaluated") || (mode === "inputtingNum2" && num2 === "");
 }
 
 function evaluateAndDisplayResult() {
