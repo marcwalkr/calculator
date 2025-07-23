@@ -44,7 +44,7 @@ function isReplacingResult() {
   return (mode === "resultDisplayed") || (mode === "inputtingNum2" && num2 === "");
 }
 
-function operateAndDisplay() {
+function evaluateAndDisplayResult() {
   const result = operate(Number(num1), Number(num2), operation);
 
   // Set num1 to the result to allow for chaining operators and equals
@@ -79,7 +79,7 @@ function handleOperator(value) {
 
   if (mode === "inputtingNum2") {
     // An operator was clicked before evaluating the previous expression
-    operateAndDisplay();
+    evaluateAndDisplayResult();
   }
 
   num2 = "";
@@ -90,7 +90,7 @@ function handleOperator(value) {
 function handleEquals() {
   if (num1 === "" || num2 === "" || operation === null) return;
 
-  operateAndDisplay();
+  evaluateAndDisplayResult();
   mode = "justEvaluated";
 }
 
