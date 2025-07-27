@@ -44,14 +44,57 @@ function isReplacingResult() {
   return (mode === "justEvaluated") || (mode === "inputtingNum2" && num2 === "");
 }
 
+function formatScientific(num) {
+  return num
+    .toExponential(6)
+    .replace(/(\.\d*?[1-9])0+e/, "$1e")
+    .replace(/\.0+e/, "e");
+}
+
+function formatWithRounding(num, maxChars) {
+  const MIN_DECIMALS = 2;
+
+  const intPart = Math.abs(num).toString().split(".")[0];
+  const intLen = intPart.length;
+
+  // Always leave space for possible negative sign and decimal point
+  const maxDecimalDigits = maxChars - intLen - 2;
+
+  const decimals = Math.max(MIN_DECIMALS, maxDecimalDigits);
+  let rounded = num.toFixed(decimals);
+
+  // Strip unnecessary trailing zeros and dot
+  rounded = rounded.replace(/\.?0+$/, "");
+
+  // Prevent lone minus sign or "0." from being shown
+  if (rounded === "-0") rounded = "0";
+
+  return rounded;
+}
+
+function formatForDisplay(num) {
+  const MAX_LENGTH = 14;
+  const abs = Math.abs(num);
+
+  const isScientific = abs !== 0 && (abs < 1e-6 || abs >= 1e12);
+
+  const result = isScientific
+    ? formatScientific(num)
+    : formatWithRounding(num, MAX_LENGTH);
+
+  // Fall back to scientific notation if the rounded result is too long
+  return result.length <= MAX_LENGTH ? result : formatScientific(num);
+}
+
 function evaluateAndDisplayResult() {
   const result = operate(Number(num1), Number(num2), operation);
+  const formattedResult = formatForDisplay(result);
 
   // Set num1 to the result to allow for chaining operators and equals
   num1 = result.toString();
 
   clearDisplay();
-  appendToDisplay(num1);
+  appendToDisplay(formattedResult);
 }
 
 function handleNumber(value) {
