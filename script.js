@@ -150,6 +150,7 @@ function handleDelete() {
   
   // User is modifying the displayed result, treat it as a new first number
   if (isReplacingResult()) {
+    num1 = display.textContent;
     num2 = "";
     operation = null;
     mode = "inputtingNum1";
