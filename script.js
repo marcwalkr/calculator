@@ -147,23 +147,34 @@ function clear() {
 
 function handleDelete() {
   if (num1 === "" && num2 === "") return;
+
+  let current = removeLastCharacter(display.textContent);
+
+  const shouldClear = (
+    current.includes("e") ||
+    current === "-" ||
+    current === "." ||
+    current === "-."
+  );
+
+  if (shouldClear) {
+    current = "";
+  }
   
   // User is modifying the displayed result, treat it as a new first number
   if (isReplacingResult()) {
-    num1 = display.textContent;
     num2 = "";
     operation = null;
     mode = "inputtingNum1";
   }
 
   clearDisplay();
+  appendToDisplay(current);
 
   if (mode === "inputtingNum1") {
-    num1 = removeLastCharacter(num1);
-    appendToDisplay(num1);
+    num1 = current;
   } else {
-    num2 = removeLastCharacter(num2);
-    appendToDisplay(num2);
+    num2 = current;
   }
 }
 
