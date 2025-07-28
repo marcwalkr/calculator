@@ -114,27 +114,25 @@ function handleInput(value) {
     mode = "inputtingNum1";
   }
 
+  let current = mode === "inputtingNum1" ? num1 : num2;
+
   // Disallow multiple decimals
-  const isDecimal = value === ".";
-  const current = mode === "inputtingNum1" ? num1 : num2;
-  if (isDecimal && current.includes(".")) return;
+  if (value === "." && current.includes(".")) return;
 
   // If starting with a decimal, prefix with "0"
-  if (isDecimal && current === "") value = "0.";
+  if (value === "." && current === "") value = "0.";
 
-  // Clear display once before starting num2
-  if (mode === "inputtingNum2" && num2 === "") {
-    clearDisplay();
-  }
+   // Clear display once before starting num2
+  if (mode === "inputtingNum2" && num2 === "") clearDisplay();
 
-  // Append to number and display
-  if (mode === "inputtingNum1") {
-    num1 += value;
-  } else {
-    num2 += value;
-  }
-
+  current += value;
   appendToDisplay(value);
+
+  if (mode === "inputtingNum1") {
+    num1 = current;
+  } else {
+    num2 = current;
+  }
 }
 
 function handleOperator(value) {
