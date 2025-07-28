@@ -107,13 +107,20 @@ function evaluateAndDisplayResult() {
   appendToDisplay(formattedResult);
 }
 
-function handleNumber(value) {
-  // A number was clicked after an expression was just evaluated
-  // Clear and start fresh
+function handleInput(value) {
+  // A number or decimal was clicked after evaluating — start fresh
   if (mode === "justEvaluated") {
     clear();
     mode = "inputtingNum1";
   }
+
+  // Disallow multiple decimals
+  const isDecimal = value === ".";
+  const current = mode === "inputtingNum1" ? num1 : num2;
+  if (isDecimal && current.includes(".")) return;
+
+  // If starting with a decimal, prefix with "0"
+  if (isDecimal && current === "") value = "0.";
 
   if (mode === "inputtingNum1") {
     num1 += value;
@@ -204,9 +211,8 @@ buttons.addEventListener("click", (event) => {
 
   switch (type) {
     case "number":
-      handleNumber(value);
-      break;
     case "decimal":
+      handleInput(value);
       break;
     case "operator":
       handleOperator(value);
