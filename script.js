@@ -44,6 +44,11 @@ function isReplacingResult() {
   return (mode === "justEvaluated") || (mode === "inputtingNum2" && num2 === "");
 }
 
+function handleDivideByZero() {
+  clear();
+  appendToDisplay("(╯°□°)╯︵ ┻━┻");
+}
+
 function formatScientific(num) {
   return num
     .toExponential(6)
@@ -87,6 +92,11 @@ function formatForDisplay(num) {
 }
 
 function evaluateAndDisplayResult() {
+  if (num2 === "0" && operation === "/") {
+    handleDivideByZero();
+    return;
+  }
+
   const result = operate(Number(num1), Number(num2), operation);
   const formattedResult = formatForDisplay(result);
 
