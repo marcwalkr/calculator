@@ -50,10 +50,9 @@ function handleDivideByZero() {
 }
 
 function formatScientific(num) {
-  return num
-    .toExponential(6)
-    .replace(/(\.\d*?[1-9])0+e/, "$1e")
-    .replace(/\.0+e/, "e");
+  const [base, exp] = num.toExponential(6).split("e");
+  const trimmedBase = base.replace(/\.?0+$/, "");
+  return `${trimmedBase}e${exp}`;
 }
 
 function formatWithRounding(num, maxChars) {
