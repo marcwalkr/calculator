@@ -122,12 +122,15 @@ function handleInput(value) {
   // If starting with a decimal, prefix with "0"
   if (isDecimal && current === "") value = "0.";
 
+  // Clear display once before starting num2
+  if (mode === "inputtingNum2" && num2 === "") {
+    clearDisplay();
+  }
+
+  // Append to number and display
   if (mode === "inputtingNum1") {
     num1 += value;
   } else {
-    // num1 is still on the display, clear once before starting num2
-    if (num2 === "") clearDisplay();
-
     num2 += value;
   }
 
