@@ -53,20 +53,20 @@ function formatScientific(num) {
 
 function formatWithRounding(num, maxChars) {
   const MIN_DECIMALS = 2;
+  const isNegative = num < 0;
 
   const intPart = Math.abs(num).toString().split(".")[0];
   const intLen = intPart.length;
 
-  // Always leave space for possible negative sign and decimal point
-  const maxDecimalDigits = maxChars - intLen - 2;
+  // Reserve space for decimal point (always) and minus sign (only if needed)
+  const reserved = 1 + (isNegative ? 1 : 0); 
+  const maxDecimalDigits = maxChars - intLen - reserved;
 
   const decimals = Math.max(MIN_DECIMALS, maxDecimalDigits);
   let rounded = num.toFixed(decimals);
 
-  // Strip unnecessary trailing zeros and dot
+  // Strip trailing zeros and dot
   rounded = rounded.replace(/\.?0+$/, "");
-
-  // Prevent lone minus sign or "0." from being shown
   if (rounded === "-0") rounded = "0";
 
   return rounded;
