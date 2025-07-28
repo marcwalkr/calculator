@@ -207,7 +207,7 @@ buttons.addEventListener("click", (event) => {
   const type = event.target.dataset.type;
   const value = event.target.dataset.value;
 
-  if (!type) return // Click wasn't on a button
+  if (!type) return; // Click wasn't on a button
 
   switch (type) {
     case "number":
